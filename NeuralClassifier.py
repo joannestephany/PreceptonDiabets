@@ -77,8 +77,8 @@ atributos_norm, diagnostico_norm = preProcessar(base_Treinamento, False) # chama
 #Treinamento do Neurônio Perceptron
 
 modelo = Perceptron()
-modelo.fit(atributos_norm, diagnostico_norm)
-print('Acurácia: %.3f' % modelo.score(atributos_norm, diagnostico_norm))
+modelo.fit(atributos_norm, diagnostico_norm) 
+print('Acurácia: %.3f' % modelo.score(atributos_norm, diagnostico_norm)) 
 
 # Validação do Aprendizado
 # Coloquei o arquivozinho de testizinho só com os que eu quero descobrir o resultado, esses, são ver se ensinamos direito
