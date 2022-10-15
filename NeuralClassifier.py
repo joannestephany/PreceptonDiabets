@@ -7,8 +7,8 @@ mms = preprocessing.MinMaxScaler()
 
 
 def preProcessar(base, isteste=False):
-    aux = np.array(base[:, 0])
-    pregnancies = mms.fit_transform(aux.reshape(-1, 1))
+    aux = np.array(base[:, 0]) # pega a primeira coluna
+    pregnancies = mms.fit_transform(aux.reshape(-1, 1)) # normaliza a primeira coluna
 
     aux = np.array(base[:, 1])
     glucose = mms.fit_transform(aux.reshape(-1, 1))
@@ -34,7 +34,7 @@ def preProcessar(base, isteste=False):
     if isteste == False:
         outcome = base[:, 8]
 
-    atributos_norm = np.column_stack((pregnancies, glucose, bloodPressure, skinThickness, insulin, BMI, DPF, age))
+    atributos_norm = np.column_stack((pregnancies, glucose, bloodPressure, skinThickness, insulin, BMI, DPF, age)) # junta as colunas normalizadas
     print("--------------------------------")
     print("Atributos de Entrada - Numéricos")
     print("--------------------------------")
@@ -44,7 +44,7 @@ def preProcessar(base, isteste=False):
         print("----------------------------------------")
         print("Classificação Supervisionada - Numéricos")
         print("----------------------------------------")
-        diagnostico_norm = np.hstack((outcome))
+        diagnostico_norm = np.hstack((outcome)) 
         print(diagnostico_norm)
         return atributos_norm, diagnostico_norm
     return atributos_norm
@@ -52,6 +52,7 @@ def preProcessar(base, isteste=False):
 # Carregando dados do arquivo CSV
 # Coloquei o arquivozinho de testizinho que o prof mandou, esses, são para ensinar a rede tchucthuc
 url = 'https://raw.githubusercontent.com/joannestephany/PreceptonDiabets/main/NeuralClassifier/diabetes.csv'
+
 base_Treinamento = pd.read_csv(url, sep=',', encoding='latin1').values
 print("---------------------------------")
 print("Dados dos Pacientes - TREINAMENTO")
@@ -60,7 +61,7 @@ print(base_Treinamento)
 print("---------------------------------")
 
 # Extração dos Atributos a serem utilizadas pela rede... acho
-print("Atributos de Entrada")
+print("Atributos de Entrada - Treinamento")
 print("---------------------------------")
 print(base_Treinamento[:, 0:8])
 
@@ -71,7 +72,7 @@ print(base_Treinamento[:,:8])
 
 #PRE PROCESSAMENTO
 
-atributos_norm, diagnostico_norm = preProcessar(base_Treinamento, False)
+atributos_norm, diagnostico_norm = preProcessar(base_Treinamento, False) # chama a função de pre processamento, que converte os dados para valores entre 0 e 1
 
 #Treinamento do Neurônio Perceptron
 
@@ -90,12 +91,12 @@ print(base_Testes)
 print("---------------------------------")
 
 # Extração dos Atributos a serem utilizadas pela rede
-print("Atributos de Entrada")
+print("Atributos de Entrada - Testes")
 print("---------------------------------")
 print(base_Testes[:, 0:8])
 
 atributos_norm = preProcessar(base_Testes, True)
 
 base_Predicao = modelo.predict((atributos_norm))
-print("----------------------------")
-print("Classificações: ", base_Predicao)
+print("\n----------------------------")
+print("Classificações: ", base_Predicao) # 0 = Não Diabético, 1 = Diabético
